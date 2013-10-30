@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@id='general']" position="after">
+        <page id="margins" string="Margins">
+            <field name="margins" colspan="4"/>
+        </page>
+    </xpath>
+    <xpath expr="/form/field[@name='total_cost']" position="after">
+        <label name="percent_margin"/>
+        <field name="percent_margin"/>
+        <label name="unit_margin"/>
+        <field name="unit_margin"/>
+    </xpath>
+</data>
