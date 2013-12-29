@@ -9,7 +9,7 @@
     </xpath>
     <xpath expr="/form/field[@name='total_cost']" position="after">
         <label name="percent_margin"/>
-        <field name="percent_margin"/>
+        <field name="percent_margin" factor="100" />
         <label name="unit_margin"/>
         <field name="unit_margin"/>
     </xpath>

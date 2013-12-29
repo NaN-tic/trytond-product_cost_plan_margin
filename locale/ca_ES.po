@@ -1,0 +1,149 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:product.cost.plan.margin:"
+msgid "Invalid margin for \"%s\". Margin \"%s\" must be greather than minimum \"%s\"."
+msgstr ""
+"Marge invàlid pel registre \"%s\". El marge \"%s\" ha de ser major que el "
+"mínim \"%s\"."
+
+msgctxt "field:product.cost.plan,margins:"
+msgid "Margins"
+msgstr "Marges"
+
+msgctxt "field:product.cost.plan,percent_margin:"
+msgid "Margin %"
+msgstr "Marge (%)"
+
+msgctxt "field:product.cost.plan,unit_margin:"
+msgid "Unit Margin"
+msgstr "Marge unitari"
+
+msgctxt "field:product.cost.plan.margin,cost:"
+msgid "Cost"
+msgstr "Cost"
+
+msgctxt "field:product.cost.plan.margin,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:product.cost.plan.margin,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:product.cost.plan.margin,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:product.cost.plan.margin,margin:"
+msgid "Margin"
+msgstr "Marge"
+
+msgctxt "field:product.cost.plan.margin,margin_percent:"
+msgid "Margin %"
+msgstr "Marge (%)"
+
+msgctxt "field:product.cost.plan.margin,minimum:"
+msgid "Minimum %"
+msgstr "Mínim (%)"
+
+msgctxt "field:product.cost.plan.margin,plan:"
+msgid "Plan"
+msgstr "Pla"
+
+msgctxt "field:product.cost.plan.margin,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:product.cost.plan.margin,type:"
+msgid "Type"
+msgstr "Tipus"
+
+msgctxt "field:product.cost.plan.margin,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:product.cost.plan.margin,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:product.cost.plan.margin.type,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:product.cost.plan.margin.type,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:product.cost.plan.margin.type,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:product.cost.plan.margin.type,minimum_percent:"
+msgid "Minimum %"
+msgstr "Mínim (%)"
+
+msgctxt "field:product.cost.plan.margin.type,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:product.cost.plan.margin.type,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:product.cost.plan.margin.type,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:product.cost.plan.margin.type,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "model:ir.action,name:act_product_cost_plan_margin"
+msgid "Plan Margin"
+msgstr "Marge del pla"
+
+msgctxt "model:ir.action,name:act_product_cost_plan_margin_type"
+msgid "Plan Margin Type"
+msgstr "Tipus de marges del pla"
+
+msgctxt "model:ir.ui.menu,name:menu_product_cost_plan_margin_type"
+msgid "Plan Margin Type"
+msgstr "Tipus de marges del pla"
+
+msgctxt "model:product.cost.plan.margin,name:"
+msgid "Plan Margin"
+msgstr "Marge del pla"
+
+msgctxt "model:product.cost.plan.margin.type,name:"
+msgid "Plan Margin Type"
+msgstr "Tipus de marges del pla"
+
+msgctxt "model:res.group,name:group_product_cost_plan_margin"
+msgid "Product Cost Plan Margin"
+msgstr "Marges al plà de costos de producte"
+
+msgctxt "model:res.group,name:group_product_cost_plan_margin_admin"
+msgid "Product Cost Plan Margin Administration"
+msgstr "Administrador de marges al plà de costos de producte"
+
+msgctxt "view:product.cost.plan.margin.type:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:product.cost.plan.margin.type:"
+msgid "Plan Margin Type"
+msgstr "Tipus de marges del pla"
+
+msgctxt "view:product.cost.plan.margin:"
+msgid "%"
+msgstr "Nom"
+
+msgctxt "view:product.cost.plan.margin:"
+msgid "Plan Margin"
+msgstr "Marge del pla"
+
+msgctxt "view:product.cost.plan:"
+msgid "Margins"
+msgstr "Marges"

@@ -5,7 +5,7 @@
     <field name="plan"/>
     <field name="type"/>
     <field name="cost"/>
-    <field name="minimum"/>
-    <field name="margin_percent"/>
+    <field name="minimum" factor="100"/>
+    <field name="margin_percent" factor="100"/>
     <field name="margin"/>
 </tree>

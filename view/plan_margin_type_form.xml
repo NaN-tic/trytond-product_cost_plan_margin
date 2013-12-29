@@ -4,6 +4,9 @@
 <form string="Plan Margin Type">
     <label name="name"/>
     <field name="name"/>
-    <label name="minimum"/>
-    <field name="minimum"/>
+    <label name="minimum_percent"/>
+    <group col="2" id="minimum_percent">
+        <field name="minimum_percent" factor="100" xexpand="0"/>
+        <label name="minimum_percent" string="%" xalign="0.0" xexpand="1"/>
+    </group>
 </form>

@@ -3,5 +3,5 @@
      copyright notices and license terms. -->
 <tree string="Plan Margin Type">
     <field name="name"/>
-    <field name="minimum"/>
+    <field name="minimum_percent" factor="100"/>
 </tree>
