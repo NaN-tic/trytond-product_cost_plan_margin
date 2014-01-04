@@ -103,7 +103,7 @@ class Plan:
     def get_margins(cls, plans, names):
         res = {}
         for name in names:
-            res[name] = dict([(p.id, _ZERO) for p in plans])
+            res[name] = dict([(p.id, 0.0) for p in plans])
 
         for plan in plans:
             total_margin = sum(Decimal(str(m.margin)) for m in plan.margins)
