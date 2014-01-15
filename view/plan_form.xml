@@ -12,5 +12,7 @@
         <field name="percent_margin" factor="100" />
         <label name="unit_margin"/>
         <field name="unit_margin"/>
+        <label name="unit_price"/>
+        <field name="unit_price"/>
     </xpath>
 </data>

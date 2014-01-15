@@ -82,6 +82,9 @@ class Plan:
         'get_margins')
     percent_margin = fields.Function(fields.Float('Margin %', digits=(14, 4)),
         'get_margins')
+    unit_price = fields.Function(fields.Numeric('Unit Price',
+            on_change_with=['quantity', 'total_cost', 'unit_margin']),
+        'on_change_with_unit_price')
 
     @classmethod
     def __setup__(cls):
@@ -98,6 +101,12 @@ class Plan:
         for margin in self.margins:
             cost += Decimal(str(margin.cost))
         return cost
+
+    def on_change_with_unit_price(self, name=None):
+        if not self.total_cost or not self.quantity or not self.unit_margin:
+            return Decimal('0.0')
+        return ((self.total_cost / Decimal(str(self.quantity)))
+            + Decimal(str(self.unit_margin)))
 
     @classmethod
     def get_margins(cls, plans, names):
