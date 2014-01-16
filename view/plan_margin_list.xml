@@ -8,4 +8,5 @@
     <field name="minimum" factor="100"/>
     <field name="margin_percent" factor="100"/>
     <field name="margin"/>
+    <field name="system"/>
 </tree>

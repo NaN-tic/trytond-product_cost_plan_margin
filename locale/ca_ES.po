@@ -8,6 +8,10 @@ msgstr ""
 "Marge invàlid pel registre \"%s\". El marge \"%s\" ha de ser major que el "
 "mínim \"%s\"."
 
+msgctxt "error:product.cost.plan.margin:"
+msgid "You can not delete margin \"%s\" because it's managed by system."
+msgstr "No es pot eliminar el marge \"%s\" perquè esta gestionat pel sistema."
+
 msgctxt "field:product.cost.plan,margins:"
 msgid "Margins"
 msgstr "Marges"
@@ -19,6 +23,10 @@ msgstr "Marge (%)"
 msgctxt "field:product.cost.plan,unit_margin:"
 msgid "Unit Margin"
 msgstr "Marge unitari"
+
+msgctxt "field:product.cost.plan,unit_price:"
+msgid "Unit Price"
+msgstr "Preu unitat"
 
 msgctxt "field:product.cost.plan.margin,cost:"
 msgid "Cost"
@@ -55,6 +63,10 @@ msgstr "Pla"
 msgctxt "field:product.cost.plan.margin,rec_name:"
 msgid "Name"
 msgstr "Nom"
+
+msgctxt "field:product.cost.plan.margin,system:"
+msgid "System Managed"
+msgstr "Gestionat pel sistema"
 
 msgctxt "field:product.cost.plan.margin,type:"
 msgid "Type"
@@ -121,11 +133,11 @@ msgid "Plan Margin Type"
 msgstr "Tipus de marges del pla"
 
 msgctxt "model:res.group,name:group_product_cost_plan_margin"
-msgid "Product Cost Plan Margin"
+msgid "Product_cost_plan_margin"
 msgstr "Marges al plà de costos de producte"
 
 msgctxt "model:res.group,name:group_product_cost_plan_margin_admin"
-msgid "Product Cost Plan Margin Administration"
+msgid "Product_cost_plan_margin Administration"
 msgstr "Administrador de marges al plà de costos de producte"
 
 msgctxt "view:product.cost.plan.margin.type:"

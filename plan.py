@@ -2,6 +2,8 @@ from decimal import Decimal
 
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import Pool, PoolMeta
+from trytond.pyson import Eval
+from trytond.transaction import Transaction
 
 __all__ = ['PlanMarginType', 'PlanMargin', 'Plan']
 __metaclass__ = PoolMeta
@@ -21,6 +23,11 @@ class PlanMarginType(ModelSQL, ModelView):
     def default_minimum_percent():
         return 0.0
 
+STATES = {
+    'readonly': Eval('system', False),
+    }
+DEPENDS = ['system']
+
 
 class PlanMargin(ModelSQL, ModelView):
     'Plan Margin'
@@ -28,8 +35,9 @@ class PlanMargin(ModelSQL, ModelView):
 
     plan = fields.Many2One('product.cost.plan', 'Plan', required=True)
     type = fields.Many2One('product.cost.plan.margin.type', 'Type',
-        required=True)
-    cost = fields.Numeric('Cost', required=True)
+        required=True, states=STATES, depends=DEPENDS)
+    cost = fields.Numeric('Cost', required=True, states=STATES,
+        depends=DEPENDS)
     minimum = fields.Function(fields.Float('Minimum %', digits=(14, 4),
             on_change_with=['type']),
         'on_change_with_minimum')
@@ -37,6 +45,7 @@ class PlanMargin(ModelSQL, ModelView):
     margin = fields.Function(fields.Numeric('Margin',
             on_change_with=['cost', 'margin_percent']),
         'on_change_with_margin')
+    system = fields.Boolean('System Managed', readonly=True)
 
     @classmethod
     def __setup__(cls):
@@ -44,7 +53,13 @@ class PlanMargin(ModelSQL, ModelView):
         cls._error_messages.update({
                 'minimum_margin': ('Invalid margin for "%s". Margin "%s" must '
                     'be greather than minimum "%s".'),
+                'delete_system_margin': ('You can not delete margin "%s" '
+                    'because it\'s managed by system.'),
                 })
+
+    @staticmethod
+    def default_system():
+        return False
 
     def get_rec_name(self, name):
         return self.type.rec_name
@@ -58,6 +73,15 @@ class PlanMargin(ModelSQL, ModelView):
         super(PlanMargin, cls).validate(margins)
         for margin in margins:
             margin.check_minimum()
+
+    @classmethod
+    def delete(cls, margins):
+        if not Transaction().context.get('reset_margins', False):
+            for margin in margins:
+                if margin.system:
+                    cls.raise_user_error('delete_system_margin',
+                        margin.rec_name)
+        super(PlanMargin, cls).delete(margins)
 
     def check_minimum(self):
         if not self.margin_percent >= self.minimum:
@@ -94,12 +118,31 @@ class Plan:
             if not fname in cls.total_cost.on_change_with:
                 cls.total_cost.on_change_with.append(fname)
                 cls.total_cost.depends.append(fname)
+        for fname in ('products', 'operations'):
+            if not fname in cls._fields.keys():
+                continue
+            field_definition = getattr(cls, fname)
+            if not field_definition.on_change:
+                field_definition.on_change = []
+            if not 'margins' in field_definition.on_change:
+                field_definition.on_change.append('margins')
+                field_definition.depends.append('margins')
+            if not fname in field_definition.on_change:
+                field_definition.on_change.append(fname)
+                field_definition.depends.append(fname)
+            for second_fname in ('product_cost', 'operation_cost'):
+                if not second_fname in cls._fields.keys():
+                    continue
+                field_definition.on_change.append(second_fname)
+                field_definition.depends.append(second_fname)
+            setattr(cls, fname, field_definition)
         super(Plan, cls).__setup__()
 
     def on_change_with_total_cost(self, name=None):
         cost = Decimal('0.0')
         for margin in self.margins:
-            cost += Decimal(str(margin.cost))
+            if margin.cost:
+                cost += Decimal(str(margin.cost))
         return cost
 
     def on_change_with_unit_price(self, name=None):
@@ -107,6 +150,39 @@ class Plan:
             return Decimal('0.0')
         return ((self.total_cost / Decimal(str(self.quantity)))
             + Decimal(str(self.unit_margin)))
+
+    def update_margin_type(self, type_, value):
+        """
+        Updates the margin line for type_ with value of field
+        """
+        res = {}
+        to_update = []
+        for margin in self.margins:
+            if margin.type == type_ and margin.system:
+                to_update.append({'cost': value, 'id': margin.id})
+                margin.cost = value
+        if to_update:
+            res['margins'] = {'update': to_update}
+            res['total_cost'] = self.on_change_with_total_cost()
+        return res
+
+    def on_change_products(self):
+        pool = Pool()
+        MarginType = pool.get('product.cost.plan.margin.type')
+        ModelData = pool.get('ir.model.data')
+
+        type_ = MarginType(ModelData.get_id(MODULE_NAME, 'raw_materials'))
+        self.product_cost = sum(p.total for p in self.products)
+        return self.update_margin_type(type_, self.product_cost)
+
+    def on_change_operations(self):
+        pool = Pool()
+        MarginType = pool.get('product.cost.plan.margin.type')
+        ModelData = pool.get('ir.model.data')
+
+        type_ = MarginType(ModelData.get_id(MODULE_NAME, 'operations'))
+        self.operation_cost = sum(o.cost for o in self.operations)
+        return self.update_margin_type(type_, self.operation_cost)
 
     @classmethod
     def get_margins(cls, plans, names):
@@ -142,7 +218,8 @@ class Plan:
                     to_delete.append(margin)
 
         if to_delete:
-            MarginLines.delete(to_delete)
+            with Transaction().set_context(reset_margins=True):
+                MarginLines.delete(to_delete)
 
     @classmethod
     def compute(cls, plans):
@@ -168,6 +245,7 @@ class Plan:
                     'margin_percent': margin_type.minimum_percent,
                     'cost': Decimal(str(cost)),
                     'plan': self.id,
+                    'system': True,
                     })
         return ret
 
