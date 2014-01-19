@@ -8,11 +8,18 @@
         </page>
     </xpath>
     <xpath expr="/form/field[@name='total_cost']" position="after">
-        <label name="percent_margin"/>
-        <field name="percent_margin" factor="100" />
+        <label name="total_margin"/>
+        <field name="total_margin"/>
+        <label name="total_price"/>
+        <field name="total_price"/>
+        <newline/>
+    </xpath>
+    <xpath expr="/form/field[@name='unit_cost_price']" position="after">
         <label name="unit_margin"/>
         <field name="unit_margin"/>
         <label name="unit_price"/>
         <field name="unit_price"/>
+        <label name="percent_margin"/>
+        <field name="percent_margin" factor="100" />
     </xpath>
 </data>

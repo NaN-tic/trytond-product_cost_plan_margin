@@ -107,8 +107,13 @@ class Plan:
     percent_margin = fields.Function(fields.Float('Margin %', digits=(14, 4)),
         'get_margins')
     unit_price = fields.Function(fields.Numeric('Unit Price',
-            on_change_with=['quantity', 'total_cost', 'unit_margin']),
+            on_change_with=['quantity', 'total_cost', 'unit_margin',
+                'margins']),
         'on_change_with_unit_price')
+    total_margin = fields.Function(fields.Numeric('Total Margin'),
+        'get_margins')
+    total_price = fields.Function(fields.Numeric('Total Price'),
+        'get_total_price')
 
     @classmethod
     def __setup__(cls):
@@ -142,7 +147,7 @@ class Plan:
         cost = Decimal('0.0')
         for margin in self.margins:
             if margin.cost:
-                cost += Decimal(str(margin.cost))
+                cost += margin.cost
         return cost
 
     def on_change_with_unit_price(self, name=None):
@@ -192,6 +197,8 @@ class Plan:
 
         for plan in plans:
             total_margin = sum(Decimal(str(m.margin)) for m in plan.margins)
+            if 'total_margin' in names:
+                res['total_margin'][plan.id] = total_margin
 
             if plan.total_cost != _ZERO and 'percent_margin' in names:
                 res['percent_margin'][plan.id] = round(float(total_margin /
@@ -202,6 +209,9 @@ class Plan:
                 res['unit_margin'][plan.id] = round(float(total_margin /
                         quantity), 4)
         return res
+
+    def get_total_price(self, name):
+        return self.total_cost + self.total_margin
 
     @classmethod
     def reset(cls, plans):
