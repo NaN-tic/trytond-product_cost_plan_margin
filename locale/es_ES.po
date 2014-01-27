@@ -21,6 +21,14 @@ msgctxt "field:product.cost.plan,percent_margin:"
 msgid "Margin %"
 msgstr "Margen (%)"
 
+msgctxt "field:product.cost.plan,total_margin:"
+msgid "Total Margin"
+msgstr "Margen total"
+
+msgctxt "field:product.cost.plan,total_price:"
+msgid "Total Price"
+msgstr "Precio total"
+
 msgctxt "field:product.cost.plan,unit_margin:"
 msgid "Unit Margin"
 msgstr "Margen unitario"
