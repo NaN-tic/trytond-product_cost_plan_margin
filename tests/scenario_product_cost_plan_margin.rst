@@ -187,10 +187,6 @@ Create a cost plan for product (without child boms)::
     >>> plan.reload()
     >>> plan.state
     u'computed'
-    >>> len(plan.margins) == 2
-    True
-    >>> [o.minimum for o in plan.margins] == [0.0, 0.0]
-    True
     >>> c1, = plan.products.find([
     ...     ('product', '=', component1.id),
     ...     ], limit=1)
@@ -203,9 +199,9 @@ Create a cost plan for product (without child boms)::
     True
     >>> plan.total_cost == Decimal('175.0')
     True
-    >>> raw_materials, = plan.margins.find([
-    ...     ('rec_name', '=', 'Raw materials'),
-    ...     ], limit=1)
+    >>> raw_materials, = plan.costs
+    >>> raw_materials.minimum == 0.0
+    True
     >>> raw_materials.cost == Decimal('175.0')
     True
     >>> raw_materials.margin == Decimal('0.0')
