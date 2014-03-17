@@ -3,7 +3,7 @@
      copyright notices and license terms. -->
 <data>
     <xpath expr="/form/field[@name='cost_price']" position="after">
-        <newlinew/>
+        <newline/>
         <label name="margin"/>
         <field name="margin"/>
         <label name="unit_price"/>
