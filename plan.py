@@ -26,7 +26,7 @@ class PlanCost:
             on_change_with=['type']),
         'on_change_with_minimum')
     margin_percent = fields.Float('Margin %', required=True, digits=(14, 4))
-    margin = fields.Function(fields.Numeric('Margin',
+    margin = fields.Function(fields.Numeric('Margin', digits=(14, 4),
             on_change_with=['cost', 'margin_percent']),
         'on_change_with_margin')
 
@@ -44,6 +44,14 @@ class PlanCost:
         for line in costs:
             line.check_minimum()
 
+    @classmethod
+    def create(cls, vlist):
+        vlist = [x.copy() for x in vlist]
+        for values in vlist:
+            if 'margin_percent' not in values:
+                values['margin_percent'] = 0
+        return super(PlanCost, cls).create(vlist)
+
     def check_minimum(self):
         if not self.margin_percent >= self.minimum:
             self.raise_user_error('minimum_margin', (self.rec_name,
@@ -55,8 +63,9 @@ class PlanCost:
     def on_change_with_margin(self, name=None):
         if not self.cost or not self.margin_percent:
             return _ZERO
+        digits = self.__class__.margin.digits[1]
         return Decimal(self.cost * Decimal(self.margin_percent).quantize(
-                Decimal(str(10 ** - 2))))
+                Decimal(str(10 ** - digits))))
 
     def update_cost_values(self, value):
         res = super(PlanCost, self).update_cost_values(value)
