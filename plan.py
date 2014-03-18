@@ -44,6 +44,14 @@ class PlanCost:
         for line in costs:
             line.check_minimum()
 
+    @classmethod
+    def create(cls, vlist):
+        vlist = [x.copy() for x in vlist]
+        for values in vlist:
+            if 'margin_percent' not in values:
+                values['margin_percent'] = 0
+        return super(PlanCost, cls).create(vlist)
+
     def check_minimum(self):
         if not self.margin_percent >= self.minimum:
             self.raise_user_error('minimum_margin', (self.rec_name,
