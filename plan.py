@@ -97,7 +97,7 @@ class Plan:
         return unit_price
 
     def on_change_with_margin(self, name=None):
-        return sum(c.margin for c in self.costs)
+        return sum(c.margin for c in self.costs if c.margin)
 
     def on_change_with_margin_percent(self, name=None):
         if self.cost_price == _ZERO:
