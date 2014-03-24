@@ -7,6 +7,7 @@ __all__ = ['PlanCostType', 'PlanCost', 'Plan']
 __metaclass__ = PoolMeta
 
 _ZERO = Decimal('0.0')
+DIGITS = (16, 5)
 
 
 class PlanCostType:
@@ -22,11 +23,11 @@ class PlanCost:
     'Plan Cost'
     __name__ = 'product.cost.plan.cost'
 
-    minimum = fields.Function(fields.Float('Minimum %', digits=(14, 4),
+    minimum = fields.Function(fields.Float('Minimum %', digits=DIGITS,
             on_change_with=['type']),
         'on_change_with_minimum')
-    margin_percent = fields.Float('Margin %', required=True, digits=(14, 4))
-    margin = fields.Function(fields.Numeric('Margin', digits=(14, 4),
+    margin_percent = fields.Float('Margin %', required=True, digits=(16, 4))
+    margin = fields.Function(fields.Numeric('Margin', digits=DIGITS,
             on_change_with=['cost', 'margin_percent']),
         'on_change_with_margin')
 
@@ -77,12 +78,12 @@ class PlanCost:
 class Plan:
     __name__ = 'product.cost.plan'
 
-    margin = fields.Function(fields.Numeric('Margin', digits=(16, 4),
+    margin = fields.Function(fields.Numeric('Margin', digits=DIGITS,
             on_change_with=['costs']), 'on_change_with_margin')
-    margin_percent = fields.Function(fields.Numeric('Margin %', digits=(14, 4),
+    margin_percent = fields.Function(fields.Numeric('Margin %', digits=(16, 4),
             on_change_with=['costs', 'products', 'cost_price']),
         'on_change_with_margin_percent')
-    unit_price = fields.Function(fields.Numeric('Unit Price', digits=(16, 4),
+    unit_price = fields.Function(fields.Numeric('Unit Price', digits=DIGITS,
             on_change_with=['costs', 'products', 'cost_price']),
         'on_change_with_unit_price')
 
@@ -96,7 +97,7 @@ class Plan:
         return unit_price
 
     def on_change_with_margin(self, name=None):
-        return sum(c.margin for c in self.costs)
+        return sum(c.margin for c in self.costs if c.margin)
 
     def on_change_with_margin_percent(self, name=None):
         if self.cost_price == _ZERO:
