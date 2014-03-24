@@ -180,6 +180,7 @@ Create a cost plan for product (without child boms)::
     >>> plan = CostPlan()
     >>> plan.product = product
     >>> plan.quantity = 10
+    >>> plan.boms[0].bom = None
     >>> plan.save()
     >>> plan.state
     u'draft'
@@ -190,28 +191,28 @@ Create a cost plan for product (without child boms)::
     >>> c1, = plan.products.find([
     ...     ('product', '=', component1.id),
     ...     ], limit=1)
-    >>> c1.quantity == 50.0
+    >>> c1.quantity == 5.0
     True
     >>> c2, = plan.products.find([
     ...     ('product', '=', component2.id),
     ...     ], limit=1)
-    >>> c2.quantity == 1500.0
+    >>> c2.quantity == 150.0
     True
-    >>> plan.total_cost == Decimal('175.0')
+    >>> plan.cost_price == Decimal('17.5')
     True
     >>> raw_materials, = plan.costs
     >>> raw_materials.minimum == 0.0
     True
-    >>> raw_materials.cost == Decimal('175.0')
+    >>> raw_materials.cost == Decimal('17.5')
     True
     >>> raw_materials.margin == Decimal('0.0')
     True
     >>> raw_materials.margin_percent = .2
-    >>> raw_materials.margin == Decimal('35.0')
+    >>> raw_materials.margin == Decimal('3.5')
     True
     >>> raw_materials.save()
     >>> plan.reload()
-    >>> plan.percent_margin == 0.2
+    >>> plan.margin_percent == Decimal('0.2')
     True
-    >>> plan.unit_margin == 3.5
+    >>> plan.margin == Decimal('3.5')
     True
