@@ -4,10 +4,10 @@
 <data>
     <xpath expr="/form/field[@name='cost_price']" position="after">
         <newline/>
-        <label name="margin"/>
-        <field name="margin"/>
         <label name="unit_price"/>
         <field name="unit_price"/>
+        <label name="margin"/>
+        <field name="margin"/>
         <label name="margin_percent"/>
         <field name="margin_percent" factor="100"/>
     </xpath>
