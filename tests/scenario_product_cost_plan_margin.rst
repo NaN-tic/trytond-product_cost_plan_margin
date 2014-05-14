@@ -180,7 +180,6 @@ Create a cost plan for product (without child boms)::
     >>> plan = CostPlan()
     >>> plan.product = product
     >>> plan.quantity = 1
-    >>> plan.boms[0].bom = None
     >>> plan.save()
     >>> CostPlan.compute([plan.id], config.context)
     >>> plan.reload()
@@ -208,7 +207,7 @@ Create a cost plan for product (without child boms)::
     True
     >>> raw_materials.save()
     >>> plan.reload()
-    >>> plan.margin_percent == 0.2
+    >>> plan.margin_percent == Decimal('0.2')
     True
     >>> plan.margin == Decimal('3.5')
     True
