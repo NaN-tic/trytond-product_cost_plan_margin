@@ -24,12 +24,10 @@ class PlanCost:
     'Plan Cost'
     __name__ = 'product.cost.plan.cost'
 
-    minimum = fields.Function(fields.Float('Minimum %', digits=(16, DIGITS),
-            on_change_with=['type']),
+    minimum = fields.Function(fields.Float('Minimum %', digits=(16, DIGITS)),
         'on_change_with_minimum')
     margin_percent = fields.Float('Margin %', required=True, digits=(16, 4))
-    margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS),
-            on_change_with=['cost', 'margin_percent']),
+    margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
         'on_change_with_margin')
 
     @classmethod
@@ -59,9 +57,11 @@ class PlanCost:
             self.raise_user_error('minimum_margin', (self.rec_name,
                     self.margin_percent * 100.0, self.minimum * 100.0))
 
+    @fields.depends('type')
     def on_change_with_minimum(self, name=None):
         return self.type.minimum_percent
 
+    @fields.depends('cost', 'margin_percent')
     def on_change_with_margin(self, name=None):
         if not self.cost or not self.margin_percent:
             return _ZERO
@@ -79,16 +79,16 @@ class PlanCost:
 class Plan:
     __name__ = 'product.cost.plan'
 
-    margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS),
-            on_change_with=['costs']), 'on_change_with_margin')
-    margin_percent = fields.Function(fields.Numeric('Margin %', digits=(16, 4),
-            on_change_with=['costs', 'products', 'cost_price']),
+    margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
+        'on_change_with_margin')
+    margin_percent = fields.Function(fields.Numeric('Margin %', digits=(16, 4)
+            ),
         'on_change_with_margin_percent')
     unit_price = fields.Function(fields.Numeric('Unit Price',
-            digits=(16, DIGITS),
-            on_change_with=['costs', 'products', 'cost_price']),
+            digits=(16, DIGITS)),
         'on_change_with_unit_price')
 
+    @fields.depends('costs', 'products', 'cost_price')
     def on_change_with_unit_price(self, name=None):
         unit_price = Decimal('0.0')
         if self.cost_price:
@@ -98,9 +98,11 @@ class Plan:
             unit_price += margin
         return unit_price
 
+    @fields.depends('costs')
     def on_change_with_margin(self, name=None):
         return sum(c.margin for c in self.costs if c.margin)
 
+    @fields.depends('costs', 'products', 'cost_price')
     def on_change_with_margin_percent(self, name=None):
         if self.cost_price == _ZERO:
             return
