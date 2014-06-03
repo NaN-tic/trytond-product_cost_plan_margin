@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<data>
+    <xpath expr="/tree/field[@name='cost']" position="after">
+        <field name="minimum" factor="100"/>
+        <field name="margin_percent" factor="100"/>
+        <field name="margin"/>
+    </xpath>
+</data>

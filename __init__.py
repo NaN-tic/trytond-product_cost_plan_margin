@@ -6,7 +6,7 @@ from .plan import *
 
 def register():
     Pool.register(
-        PlanMarginType,
-        PlanMargin,
+        PlanCostType,
+        PlanCost,
         Plan,
         module='product_cost_plan_margin', type_='model')

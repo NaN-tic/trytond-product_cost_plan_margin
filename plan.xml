@@ -2,105 +2,29 @@
 <tryton>
     <data>
 
-        <record model="res.group" id="group_product_cost_plan_margin_admin">
-            <field name="name">Product_cost_plan_margin Administration</field>
+        <record model="ir.ui.view" id="product_cost_plan_cost_view_form">
+            <field name="model">product.cost.plan.cost</field>
+            <field name="name">plan_cost_form</field>
+            <field name="inherit"
+                ref="product_cost_plan.product_cost_plan_cost_view_form"/>
         </record>
-        <record model="res.user-res.group" id="user_admin_group_product_cost_plan_margin_admin">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_product_cost_plan_margin_admin"/>
+        <record model="ir.ui.view" id="product_cost_plan_cost_view_list">
+            <field name="model">product.cost.plan.cost</field>
+            <field name="name">plan_cost_list</field>
+            <field name="inherit"
+                ref="product_cost_plan.product_cost_plan_cost_view_list"/>
         </record>
-        <record model="res.user-res.group" id="user_trigger_group_product_cost_plan_margin_admin">
-            <field name="user" ref="res.user_trigger"/>
-            <field name="group" ref="group_product_cost_plan_margin_admin"/>
+        <record model="ir.ui.view" id="product_cost_plan_cost_type_view_form">
+            <field name="model">product.cost.plan.cost.type</field>
+            <field name="name">plan_cost_type_form</field>
+            <field name="inherit"
+                ref="product_cost_plan.product_cost_plan_cost_type_view_form"/>
         </record>
-        <record model="res.group" id="group_product_cost_plan_margin">
-            <field name="name">Product_cost_plan_margin</field>
-        </record>
-        <record model="res.user-res.group" id="user_admin_group_product_cost_plan_margin">
-            <field name="user" ref="res.user_admin"/>
-            <field name="group" ref="group_product_cost_plan_margin"/>
-        </record>
-        <record model="res.user-res.group" id="user_trigger_group_product_cost_plan_margin">
-            <field name="user" ref="res.user_trigger"/>
-            <field name="group" ref="group_product_cost_plan_margin"/>
-        </record>
-        <record model="ir.ui.view" id="product_cost_plan_margin_view_form">
-            <field name="model">product.cost.plan.margin</field>
-            <field name="type">form</field>
-            <field name="name">plan_margin_form</field>
-        </record>
-        <record model="ir.ui.view" id="product_cost_plan_margin_view_list">
-            <field name="model">product.cost.plan.margin</field>
-            <field name="type">tree</field>
-            <field name="name">plan_margin_list</field>
-        </record>
-        <record model="ir.action.act_window" id="act_product_cost_plan_margin">
-            <field name="name">Plan Margin</field>
-            <field name="res_model">product.cost.plan.margin</field>
-        </record>
-        <record model="ir.action.act_window.view" id="act_product_cost_plan_margin_view1">
-            <field name="sequence" eval="10"/>
-            <field name="view" ref="product_cost_plan_margin_view_list"/>
-            <field name="act_window" ref="act_product_cost_plan_margin"/>
-        </record>
-        <record model="ir.action.act_window.view" id="act_product_cost_plan_margin_view2">
-            <field name="sequence" eval="20"/>
-            <field name="view" ref="product_cost_plan_margin_view_form"/>
-            <field name="act_window" ref="act_product_cost_plan_margin"/>
-        </record>
-        <record model="ir.model.access" id="access_product_cost_plan_margin">
-            <field name="model" search="[('model', '=', 'product.cost.plan.margin')]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_delete" eval="False"/>
-        </record>
-        <record model="ir.model.access" id="access_product_cost_plan_margin_admin">
-            <field name="model" search="[('model', '=', 'product.cost.plan.margin')]"/>
-            <field name="group" ref="group_product_cost_plan_margin_admin"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_delete" eval="True"/>
-        </record>
-        <record model="ir.ui.view" id="product_cost_plan_margin_type_view_form">
-            <field name="model">product.cost.plan.margin.type</field>
-            <field name="type">form</field>
-            <field name="name">plan_margin_type_form</field>
-        </record>
-        <record model="ir.ui.view" id="product_cost_plan_margin_type_view_list">
-            <field name="model">product.cost.plan.margin.type</field>
-            <field name="type">tree</field>
-            <field name="name">plan_margin_type_list</field>
-        </record>
-        <record model="ir.action.act_window" id="act_product_cost_plan_margin_type">
-            <field name="name">Plan Margin Type</field>
-            <field name="res_model">product.cost.plan.margin.type</field>
-        </record>
-        <record model="ir.action.act_window.view" id="act_product_cost_plan_margin_type_view1">
-            <field name="sequence" eval="10"/>
-            <field name="view" ref="product_cost_plan_margin_type_view_list"/>
-            <field name="act_window" ref="act_product_cost_plan_margin_type"/>
-        </record>
-        <record model="ir.action.act_window.view" id="act_product_cost_plan_margin_type_view2">
-            <field name="sequence" eval="20"/>
-            <field name="view" ref="product_cost_plan_margin_type_view_form"/>
-            <field name="act_window" ref="act_product_cost_plan_margin_type"/>
-        </record>
-        <record model="ir.model.access" id="access_product_cost_plan_margin_type">
-            <field name="model" search="[('model', '=', 'product.cost.plan.margin.type')]"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="False"/>
-            <field name="perm_create" eval="False"/>
-            <field name="perm_delete" eval="False"/>
-        </record>
-        <record model="ir.model.access" id="access_product_cost_plan_margin_type_admin">
-            <field name="model" search="[('model', '=', 'product.cost.plan.margin.type')]"/>
-            <field name="group" ref="group_product_cost_plan_margin_admin"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_delete" eval="True"/>
+        <record model="ir.ui.view" id="product_cost_plan_cost_type_view_list">
+            <field name="model">product.cost.plan.cost.type</field>
+            <field name="name">plan_cost_type_list</field>
+            <field name="inherit"
+                ref="product_cost_plan.product_cost_plan_cost_type_view_list"/>
         </record>
         <record model="ir.ui.view" id="product_cost_plan_view_form">
             <field name="model">product.cost.plan</field>
@@ -110,11 +34,5 @@
             <field name="name">plan_form</field>
         </record>
 
-        <!-- Menus -->
-        <menuitem action="act_product_cost_plan_margin_type"
-            id="menu_product_cost_plan_margin_type"
-            parent="product_cost_plan.menu_product_cost_plan"
-            sequence="1"
-            name="Plan Margin Type"/>
     </data>
 </tryton>

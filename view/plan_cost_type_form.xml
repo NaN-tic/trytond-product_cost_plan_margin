@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/field[@name='name']" position="after">
+        <label name="minimum_percent"/>
+        <group col="2" id="minimum_percent">
+            <field name="minimum_percent" factor="100" xexpand="0"/>
+            <label name="minimum_percent" string="%" xalign="0.0" xexpand="1"/>
+        </group>
+    </xpath>
+</data>

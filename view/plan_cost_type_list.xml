@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
-<tree string="Plan Margin Type">
-    <field name="name"/>
-    <field name="minimum"/>
-</tree>
+<data>
+    <xpath expr="/tree/field[@name='name']" position="after">
+        <field name="minimum_percent" factor="100"/>
+    </xpath>
+</data>
