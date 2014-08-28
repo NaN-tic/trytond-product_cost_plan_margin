@@ -81,30 +81,33 @@ class Plan:
 
     margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
         'on_change_with_margin')
-    margin_percent = fields.Function(fields.Numeric('Margin %', digits=(16, 4)
-            ),
+    margin_percent = fields.Function(fields.Numeric('Margin %',
+            digits=(16, 4)),
         'on_change_with_margin_percent')
-    unit_price = fields.Function(fields.Numeric('Unit Price',
+    unit_price = fields.Function(fields.Numeric('Unit List Price',
             digits=(16, DIGITS)),
         'on_change_with_unit_price')
 
-    @fields.depends('costs', 'products', 'cost_price')
-    def on_change_with_unit_price(self, name=None):
-        unit_price = Decimal('0.0')
-        if self.cost_price:
-            unit_price += self.cost_price
-        margin = self.on_change_with_margin()
-        if margin:
-            unit_price += margin
-        return unit_price
-
-    @fields.depends('costs')
+    @fields.depends('costs', methods=['costs'])
     def on_change_with_margin(self, name=None):
-        return sum(c.margin for c in self.costs if c.margin)
+        self.on_change_with_costs()
+        return sum(c.on_change_with_margin() or Decimal('0.0')
+            for c in self.costs)
 
-    @fields.depends('costs', 'products', 'cost_price')
+    @fields.depends('cost_price', 'margin', methods=['cost_price', 'margin'])
     def on_change_with_margin_percent(self, name=None):
-        if self.cost_price == _ZERO:
+        self.cost_price = self.on_change_with_cost_price()
+        self.margin = self.on_change_with_margin()
+        if self.cost_price == _ZERO or self.margin is None:
             return
-        margin = self.on_change_with_margin()
-        return margin / self.cost_price
+        return self.margin / self.cost_price
+
+    @fields.depends('cost_price', 'margin', methods=['cost_price', 'margin'])
+    def on_change_with_unit_price(self, name=None):
+        self.cost_price = self.on_change_with_cost_price()
+        unit_price = self.cost_price if self.cost_price else Decimal('0.0')
+
+        self.margin = self.on_change_with_margin()
+        if self.margin:
+            unit_price += self.margin
+        return unit_price
