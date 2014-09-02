@@ -111,3 +111,9 @@ class Plan:
         if self.margin:
             unit_price += self.margin
         return unit_price
+
+    def get_cost_line(self, cost_type, field_name):
+        vals = super(Plan, self).get_cost_line(cost_type, field_name)
+        if cost_type.minimum_percent:
+            vals['margin_percent'] = cost_type.minimum_percent
+        return vals

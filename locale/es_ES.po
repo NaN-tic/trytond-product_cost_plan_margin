@@ -5,7 +5,7 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 msgctxt "error:product.cost.plan.cost:"
 msgid "Invalid margin for \"%s\". Margin \"%s\" must be greather than minimum \"%s\"."
 msgstr ""
-"Margen invalido para el coste \"%s\": El margen debe ser mayor que el mínimo"
+"Margen invalido para el coste \"%s\": El margen \"%s\" debe ser mayor que el mínimo"
 " \"%s\"."
 
 msgctxt "field:product.cost.plan,percent_margin:"
