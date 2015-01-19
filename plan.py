@@ -1,7 +1,9 @@
+# The COPYRIGHT file at the top level of this repository contains the full
+# copyright notices and license terms.
 from decimal import Decimal
 
 from trytond.model import fields
-from trytond.pool import PoolMeta
+from trytond.pool import Pool, PoolMeta
 from trytond.config import config
 DIGITS = int(config.get('digits', 'unit_price_digits', 4))
 
@@ -69,51 +71,55 @@ class PlanCost:
         return Decimal(self.cost * Decimal(self.margin_percent).quantize(
                 Decimal(str(10 ** - digits))))
 
-    def update_cost_values(self, value):
-        res = super(PlanCost, self).update_cost_values(value)
-        self.cost = value
-        res['margin'] = self.on_change_with_margin()
-        return res
-
 
 class Plan:
     __name__ = 'product.cost.plan'
 
     margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
-        'on_change_with_margin')
+        'get_margin')
     margin_percent = fields.Function(fields.Numeric('Margin %',
             digits=(16, 4)),
-        'on_change_with_margin_percent')
-    unit_price = fields.Function(fields.Numeric('Unit List Price',
+        'get_margin_percent')
+    list_price = fields.Function(fields.Numeric('Unit List Price',
             digits=(16, DIGITS)),
-        'on_change_with_unit_price')
+        'get_list_price')
 
-    @fields.depends('costs', methods=['costs'])
-    def on_change_with_margin(self, name=None):
-        self.on_change_with_costs()
-        return sum(c.on_change_with_margin() or Decimal('0.0')
-            for c in self.costs)
+    def get_margin(self, name):
+        digits = self.__class__.margin.digits[1]
+        return Decimal(sum(c.on_change_with_margin() or Decimal('0.0')
+                for c in self.costs)).quantize(Decimal(str(10 ** -digits)))
 
-    @fields.depends('cost_price', 'margin', methods=['cost_price', 'margin'])
-    def on_change_with_margin_percent(self, name=None):
-        self.cost_price = self.on_change_with_cost_price()
-        self.margin = self.on_change_with_margin()
+    def get_margin_percent(self, name):
         if self.cost_price == _ZERO or self.margin is None:
             return
-        return self.margin / self.cost_price
+        return (self.margin / self.cost_price).quantize(Decimal('0.0001'))
 
-    @fields.depends('cost_price', 'margin', methods=['cost_price', 'margin'])
-    def on_change_with_unit_price(self, name=None):
-        self.cost_price = self.on_change_with_cost_price()
-        unit_price = self.cost_price if self.cost_price else Decimal('0.0')
-
-        self.margin = self.on_change_with_margin()
+    def get_list_price(self, name):
+        list_price = self.cost_price if self.cost_price else Decimal('0.0')
         if self.margin:
-            unit_price += self.margin
-        return unit_price
+            list_price += self.margin
+        return list_price
 
-    def get_cost_line(self, cost_type, field_name):
-        vals = super(Plan, self).get_cost_line(cost_type, field_name)
+    def _update_product_prices(self):
+        pool = Pool()
+        Uom = pool.get('product.uom')
+
+        assert self.product
+        super(Plan, self)._update_product_prices()
+
+        list_price = Uom.compute_price(self.uom, self.list_price,
+            self.product.default_uom)
+        if hasattr(self.product.__class__, 'list_price'):
+            digits = self.product.__class__.list_price.digits[1]
+            list_price = list_price.quantize(Decimal(str(10 ** -digits)))
+            self.product.list_price = list_price
+        else:
+            digits = self.product.template.__class__.list_price.digits[1]
+            list_price = list_price.quantize(Decimal(str(10 ** -digits)))
+            self.product.template.list_price = list_price
+
+    def _get_cost_line(self, cost_type):
+        vals = super(Plan, self)._get_cost_line(cost_type)
         if cost_type.minimum_percent:
             vals['margin_percent'] = cost_type.minimum_percent
         return vals

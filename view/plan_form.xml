@@ -2,10 +2,10 @@
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
 <data>
-    <xpath expr="/form/field[@name='cost_price']" position="after">
+    <xpath expr="/form/button[@name='update_product_prices']" position="after">
         <newline/>
-        <label name="unit_price"/>
-        <field name="unit_price"/>
+        <label name="list_price"/>
+        <field name="list_price"/>
         <label name="margin"/>
         <field name="margin"/>
         <label name="margin_percent"/>

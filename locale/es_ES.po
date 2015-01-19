@@ -5,28 +5,20 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 msgctxt "error:product.cost.plan.cost:"
 msgid "Invalid margin for \"%s\". Margin \"%s\" must be greather than minimum \"%s\"."
 msgstr ""
-"Margen invalido para el coste \"%s\": El margen \"%s\" debe ser mayor que el mínimo"
-" \"%s\"."
+"Margen invalido para el coste \"%s\": El margen \"%s\" debe ser mayor que el"
+" mínimo \"%s\"."
 
-msgctxt "field:product.cost.plan,percent_margin:"
+msgctxt "field:product.cost.plan,list_price:"
+msgid "Unit List Price"
+msgstr "Precio de venta unitario"
+
+msgctxt "field:product.cost.plan,margin:"
+msgid "Margin"
+msgstr "Margen"
+
+msgctxt "field:product.cost.plan,margin_percent:"
 msgid "Margin %"
 msgstr "Margen (%)"
-
-msgctxt "field:product.cost.plan,total_margin:"
-msgid "Total Margin"
-msgstr "Margen total"
-
-msgctxt "field:product.cost.plan,total_price:"
-msgid "Total Price"
-msgstr "Precio total"
-
-msgctxt "field:product.cost.plan,unit_margin:"
-msgid "Unit Margin"
-msgstr "Margen unitario"
-
-msgctxt "field:product.cost.plan,unit_price:"
-msgid "Unit Price"
-msgstr "Precio unidad"
 
 msgctxt "field:product.cost.plan.cost,margin:"
 msgid "Margin"
