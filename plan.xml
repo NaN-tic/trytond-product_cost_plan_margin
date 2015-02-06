@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tryton>
     <data>
-
+        <!-- product.cost.plan.cost -->
         <record model="ir.ui.view" id="product_cost_plan_cost_view_form">
             <field name="model">product.cost.plan.cost</field>
             <field name="name">plan_cost_form</field>
             <field name="inherit"
                 ref="product_cost_plan.product_cost_plan_cost_view_form"/>
         </record>
+
         <record model="ir.ui.view" id="product_cost_plan_cost_view_list">
             <field name="model">product.cost.plan.cost</field>
             <field name="name">plan_cost_list</field>
             <field name="inherit"
                 ref="product_cost_plan.product_cost_plan_cost_view_list"/>
         </record>
+
+        <!-- product.cost.plan.cost.type -->
         <record model="ir.ui.view" id="product_cost_plan_cost_type_view_form">
             <field name="model">product.cost.plan.cost.type</field>
             <field name="name">plan_cost_type_form</field>
             <field name="inherit"
                 ref="product_cost_plan.product_cost_plan_cost_type_view_form"/>
         </record>
+
         <record model="ir.ui.view" id="product_cost_plan_cost_type_view_list">
             <field name="model">product.cost.plan.cost.type</field>
             <field name="name">plan_cost_type_list</field>
             <field name="inherit"
                 ref="product_cost_plan.product_cost_plan_cost_type_view_list"/>
         </record>
+
+        <!-- product.cost.plan -->
         <record model="ir.ui.view" id="product_cost_plan_view_form">
             <field name="model">product.cost.plan</field>
             <field name="type">form</field>
@@ -34,5 +40,14 @@
             <field name="name">plan_form</field>
         </record>
 
+        <record model="ir.model.button" id="plan_update_product_list_price_button">
+            <field name="name">update_product_list_price</field>
+            <field name="model" search="[('model', '=', 'product.cost.plan')]"/>
+        </record>
+        <record model="ir.model.button-res.group"
+                id="plan_update_product_list_price_button_group_product_admin">
+            <field name="button" ref="plan_update_product_list_price_button"/>
+            <field name="group" ref="product.group_product_admin"/>
+        </record>
     </data>
 </tryton>

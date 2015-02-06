@@ -2,7 +2,7 @@
 # copyright notices and license terms.
 from decimal import Decimal
 
-from trytond.model import fields
+from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.config import config
 DIGITS = int(config.get('digits', 'unit_price_digits', 4))
@@ -75,6 +75,9 @@ class PlanCost:
 class Plan:
     __name__ = 'product.cost.plan'
 
+    product_list_price = fields.Function(fields.Numeric('Product List Price',
+            digits=(16, DIGITS)),
+        'get_product_list_price')
     margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
         'get_margin')
     margin_percent = fields.Function(fields.Numeric('Margin %',
@@ -83,6 +86,18 @@ class Plan:
     list_price = fields.Function(fields.Numeric('Unit List Price',
             digits=(16, DIGITS)),
         'get_list_price')
+
+    @classmethod
+    def __setup__(cls):
+        super(Plan, cls).__setup__()
+        cls._buttons.update({
+                'update_product_list_price': {
+                    'icon': 'tryton-refresh',
+                    },
+                })
+
+    def get_product_list_price(self, name):
+        return self.product.list_price if self.product else None
 
     def get_margin(self, name):
         digits = self.__class__.margin.digits[1]
@@ -100,13 +115,21 @@ class Plan:
             list_price += self.margin
         return list_price
 
-    def _update_product_prices(self):
+    @classmethod
+    @ModelView.button
+    def update_product_list_price(cls, plans):
+        for plan in plans:
+            if not plan.product:
+                continue
+            plan._update_product_list_price()
+            plan.product.save()
+            plan.product.template.save()
+
+    def _update_product_list_price(self):
         pool = Pool()
         Uom = pool.get('product.uom')
 
         assert self.product
-        super(Plan, self)._update_product_prices()
-
         list_price = Uom.compute_price(self.uom, self.list_price,
             self.product.default_uom)
         if hasattr(self.product.__class__, 'list_price'):

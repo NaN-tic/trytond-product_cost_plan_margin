@@ -2,13 +2,21 @@
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
 <data>
-    <xpath expr="/form/button[@name='update_product_prices']" position="after">
+    <xpath expr="/form/notebook/page[@id='costs']" position="inside">
         <newline/>
-        <label name="list_price"/>
-        <field name="list_price"/>
         <label name="margin"/>
         <field name="margin"/>
         <label name="margin_percent"/>
         <field name="margin_percent" factor="100"/>
+    </xpath>
+    <xpath expr="/form/button[@name='update_product_cost_price']" position="after">
+        <newline/>
+        <label name="list_price"/>
+        <field name="list_price"/>
+        <label name="product_list_price"/>
+        <field name="product_list_price"/>
+        <button name="update_product_list_price"
+            string="Update Product's List Price" colspan="2"
+            confirm="It will modify the product's field loosing the current value. Are you sure?"/>
     </xpath>
 </data>
