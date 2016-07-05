@@ -5,11 +5,11 @@ from decimal import Decimal
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.config import config
-DIGITS = int(config.get('digits', 'unit_price_digits', 4))
 
 __all__ = ['PlanCostType', 'PlanCost', 'Plan']
 __metaclass__ = PoolMeta
 
+DIGITS = (16, config.getint('product', 'price_decimal', default=4))
 _ZERO = Decimal('0.0')
 
 
@@ -26,10 +26,10 @@ class PlanCost:
     'Plan Cost'
     __name__ = 'product.cost.plan.cost'
 
-    minimum = fields.Function(fields.Float('Minimum %', digits=(16, DIGITS)),
+    minimum = fields.Function(fields.Float('Minimum %', digits=DIGITS),
         'on_change_with_minimum')
     margin_percent = fields.Float('Margin %', required=True, digits=(16, 4))
-    margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
+    margin = fields.Function(fields.Numeric('Margin', digits=DIGITS),
         'on_change_with_margin')
 
     @classmethod
@@ -76,15 +76,15 @@ class Plan:
     __name__ = 'product.cost.plan'
 
     product_list_price = fields.Function(fields.Numeric('Product List Price',
-            digits=(16, DIGITS)),
+            digits=DIGITS),
         'get_product_list_price')
-    margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
+    margin = fields.Function(fields.Numeric('Margin', digits=DIGITS),
         'get_margin')
     margin_percent = fields.Function(fields.Numeric('Margin %',
             digits=(16, 4)),
         'get_margin_percent')
     list_price = fields.Function(fields.Numeric('Unit List Price',
-            digits=(16, DIGITS)),
+            digits=DIGITS),
         'get_list_price')
 
     @classmethod
