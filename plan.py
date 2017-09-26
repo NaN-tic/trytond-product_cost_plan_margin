@@ -3,6 +3,7 @@
 from decimal import Decimal
 
 from trytond.model import ModelView, fields
+from trytond.modules.product import TemplateFunction
 from trytond.pool import Pool, PoolMeta
 from trytond.config import config
 
@@ -132,7 +133,9 @@ class Plan:
         assert self.product
         list_price = Uom.compute_price(self.uom, self.list_price,
             self.product.default_uom)
-        if hasattr(self.product.__class__, 'list_price'):
+        if (hasattr(self.product.__class__, 'list_price') and not
+                isinstance(self.product.__class__.list_price, TemplateFunction)
+                ):
             digits = self.product.__class__.list_price.digits[1]
             list_price = list_price.quantize(Decimal(str(10 ** -digits)))
             self.product.list_price = list_price
