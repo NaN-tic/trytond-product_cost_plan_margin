@@ -43,9 +43,9 @@ Create product::
     >>> template.producible = True
     >>> template.type = 'goods'
     >>> template.list_price = Decimal(30)
-    >>> template.cost_price = Decimal(20)
     >>> template.save()
     >>> product.template = template
+    >>> product.cost_price = Decimal(20)
     >>> product.save()
 
 Create Components::
@@ -58,9 +58,9 @@ Create Components::
     >>> templateA.default_uom = meter
     >>> templateA.type = 'goods'
     >>> templateA.list_price = Decimal(2)
-    >>> templateA.cost_price = Decimal(1)
     >>> templateA.save()
-    >>> componentA.template = templateA
+    >>> componentA, = templateA.products
+    >>> componentA.cost_price = Decimal(1)
     >>> componentA.save()
 
     >>> componentB = Product()
@@ -69,9 +69,9 @@ Create Components::
     >>> templateB.default_uom = meter
     >>> templateB.type = 'goods'
     >>> templateB.list_price = Decimal(2)
-    >>> templateB.cost_price = Decimal(1)
     >>> templateB.save()
-    >>> componentB.template = templateB
+    >>> componentB, = templateB.products
+    >>> componentB.cost_price = Decimal(1)
     >>> componentB.save()
 
     >>> component1 = Product()
@@ -81,9 +81,9 @@ Create Components::
     >>> template1.producible = True
     >>> template1.type = 'goods'
     >>> template1.list_price = Decimal(5)
-    >>> template1.cost_price = Decimal(2)
     >>> template1.save()
-    >>> component1.template = template1
+    >>> component1, = template1.products
+    >>> component1.cost_price = Decimal(2)
     >>> component1.save()
 
     >>> component2 = Product()
@@ -92,9 +92,9 @@ Create Components::
     >>> template2.default_uom = meter
     >>> template2.type = 'goods'
     >>> template2.list_price = Decimal(7)
-    >>> template2.cost_price = Decimal(5)
     >>> template2.save()
-    >>> component2.template = template2
+    >>> component2, = template2.products
+    >>> component2.cost_price = Decimal(5)
     >>> component2.save()
 
 Create Bill of Material::
