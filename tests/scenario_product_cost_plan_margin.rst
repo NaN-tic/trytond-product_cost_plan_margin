@@ -148,7 +148,7 @@ Create a cost plan for product (without child boms)::
     >>> plan.product = product
     >>> plan.quantity = 1
     >>> plan.save()
-    >>> CostPlan.compute([plan.id], config.context)
+    >>> plan.click('compute')
     >>> plan.reload()
     >>> c1, = plan.products.find([
     ...     ('product', '=', component1.id),

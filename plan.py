@@ -7,13 +7,12 @@ from trytond.pool import Pool, PoolMeta
 from trytond.config import config
 
 __all__ = ['PlanCostType', 'PlanCost', 'Plan']
-__metaclass__ = PoolMeta
 
 DIGITS = (16, config.getint('product', 'price_decimal', default=4))
 _ZERO = Decimal('0.0')
 
 
-class PlanCostType:
+class PlanCostType(metaclass=PoolMeta):
     __name__ = 'product.cost.plan.cost.type'
     minimum_percent = fields.Float('Minimum %', required=True)
 
@@ -22,8 +21,7 @@ class PlanCostType:
         return 0.0
 
 
-class PlanCost:
-    'Plan Cost'
+class PlanCost(metaclass=PoolMeta):
     __name__ = 'product.cost.plan.cost'
 
     minimum = fields.Function(fields.Float('Minimum %', digits=DIGITS),
@@ -61,7 +59,7 @@ class PlanCost:
 
     @fields.depends('type')
     def on_change_with_minimum(self, name=None):
-        return self.type.minimum_percent
+        return self.type.minimum_percent if self.type else None
 
     @fields.depends('cost', 'margin_percent')
     def on_change_with_margin(self, name=None):
@@ -72,7 +70,7 @@ class PlanCost:
                 Decimal(str(10 ** - digits))))
 
 
-class Plan:
+class Plan(metaclass=PoolMeta):
     __name__ = 'product.cost.plan'
 
     product_list_price = fields.Function(fields.Numeric('Product List Price',
