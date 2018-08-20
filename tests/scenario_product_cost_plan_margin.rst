@@ -40,6 +40,7 @@ Create product::
     >>> template = ProductTemplate()
     >>> template.name = 'product'
     >>> template.default_uom = unit
+    >>> template.producible = True
     >>> template.type = 'goods'
     >>> template.list_price = Decimal(30)
     >>> template.cost_price = Decimal(20)
@@ -77,6 +78,7 @@ Create Components::
     >>> template1 = ProductTemplate()
     >>> template1.name = 'component 1'
     >>> template1.default_uom = unit
+    >>> template1.producible = True
     >>> template1.type = 'goods'
     >>> template1.list_price = Decimal(5)
     >>> template1.cost_price = Decimal(2)
