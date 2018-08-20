@@ -2,31 +2,20 @@
 Product Cost Plan Margin Scenario
 =================================
 
-=============
-General Setup
-=============
-
 Imports::
 
     >>> import datetime
     >>> from dateutil.relativedelta import relativedelta
     >>> from decimal import Decimal
     >>> from proteus import config, Model, Wizard
+    >>> from trytond.tests.tools import activate_modules
     >>> from trytond.modules.company.tests.tools import create_company, \
     ...     get_company
     >>> today = datetime.date.today()
 
-Create database::
+Activate product_cost_plan_margin Module::
 
-    >>> config = config.set_trytond()
-    >>> config.pool.test = True
-
-Install production Module::
-
-    >>> Module = Model.get('ir.module')
-    >>> modules = Module.find([('name', '=', 'product_cost_plan_margin')])
-    >>> Module.install([x.id for x in modules], config.context)
-    >>> Wizard('ir.module.install_upgrade').execute('upgrade')
+    >>> config = activate_modules('product_cost_plan_margin')
 
 Create company::
 
