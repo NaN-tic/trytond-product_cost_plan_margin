@@ -61,7 +61,7 @@ class PlanCost:
 
     @fields.depends('type')
     def on_change_with_minimum(self, name=None):
-        return self.type.minimum_percent
+        return self.type.minimum_percent if self.type else None
 
     @fields.depends('cost', 'margin_percent')
     def on_change_with_margin(self, name=None):
