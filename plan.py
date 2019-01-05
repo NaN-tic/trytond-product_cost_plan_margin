@@ -5,6 +5,9 @@ from decimal import Decimal
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.config import config
+from trytond.i18n import gettext
+from trytond.exceptions import UserWarning
+
 
 __all__ = ['PlanCostType', 'PlanCost', 'Plan']
 
@@ -31,14 +34,6 @@ class PlanCost(metaclass=PoolMeta):
         'on_change_with_margin')
 
     @classmethod
-    def __setup__(cls):
-        super(PlanCost, cls).__setup__()
-        cls._error_messages.update({
-                'minimum_margin': ('Invalid margin for "%s". Margin "%s" must '
-                    'be greather than minimum "%s".'),
-                })
-
-    @classmethod
     def validate(cls, costs):
         super(PlanCost, cls).validate(costs)
         for line in costs:
@@ -54,8 +49,12 @@ class PlanCost(metaclass=PoolMeta):
 
     def check_minimum(self):
         if not self.margin_percent >= self.minimum:
-            self.raise_user_error('minimum_margin', (self.rec_name,
-                    self.margin_percent * 100.0, self.minimum * 100.0))
+            raise UserWarning('minimum_margin', gettext(
+                'product_cost_plan_margin.minimum_margin',
+                    cost_plan=self.rec_name,
+                    margin=self.margin_percent*100.0,
+                    value=self.minimum*100.0))
+
 
     @fields.depends('type')
     def on_change_with_minimum(self, name=None):
