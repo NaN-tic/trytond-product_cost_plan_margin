@@ -48,8 +48,10 @@ class PlanCost(metaclass=PoolMeta):
         return super(PlanCost, cls).create(vlist)
 
     def check_minimum(self):
-        if not self.margin_percent >= self.minimum:
-            raise UserWarning('minimum_margin', gettext(
+        Warning = Pool().get('res.user.warning')
+        key = 'minimum_margin_%s'%self.id
+        if not self.margin_percent >= self.minimum and Warning.check(key):
+            raise UserWarning(key, gettext(
                 'product_cost_plan_margin.minimum_margin',
                     cost_plan=self.rec_name,
                     margin=self.margin_percent*100.0,
