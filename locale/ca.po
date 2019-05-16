@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -24,6 +24,15 @@ msgctxt "field:product.cost.plan,product_list_price:"
 msgid "Product List Price"
 msgstr "Preu de venda del producte"
 
+msgctxt "field:product.cost.plan.calc_margins_from_list_price.start,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt ""
+"field:product.cost.plan.calc_margins_from_list_price.start,list_price:"
+msgid "Product List Price"
+msgstr "Preu de venda unitari"
+
 msgctxt "field:product.cost.plan.cost,margin:"
 msgid "Margin"
 msgstr "Marge"
@@ -39,6 +48,18 @@ msgstr "% Mínim"
 msgctxt "field:product.cost.plan.cost.type,minimum_percent:"
 msgid "Minimum %"
 msgstr "% Mínim"
+
+msgctxt "model:ir.action,name:act_calc_margins_from_list_price"
+msgid "Calculate Margins From List Price"
+msgstr "Calcular marges a partir de preu de venda"
+
+msgctxt "model:product.cost.plan.calc_margins_from_list_price.start,name:"
+msgid "Calculate Margins From List Price Start"
+msgstr "Calcular marges a partir de preu de venda"
+
+msgctxt "view:product.cost.plan.calc_margins_from_list_price.start:"
+msgid "Calculate Margin from List Price"
+msgstr "Calcular marges a partir de preu de venda"
 
 msgctxt "view:product.cost.plan.cost.type:"
 msgid "%"
@@ -57,3 +78,13 @@ msgstr ""
 msgctxt "view:product.cost.plan:"
 msgid "Update Product's List Price"
 msgstr "Actualitza preu de venda del producte"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,calc:"
+msgid "Calculate"
+msgstr "Calcula"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,end:"
+msgid "Cancel"
+msgstr "Cancel·lat"
