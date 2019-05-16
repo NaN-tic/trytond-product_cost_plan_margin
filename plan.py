@@ -5,9 +5,13 @@ from decimal import Decimal
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.config import config
+from trytond.wizard import Wizard, StateView, StateTransition, Button
+from trytond.transaction import Transaction
+
 DIGITS = int(config.get('digits', 'unit_price_digits', 4))
 
-__all__ = ['PlanCostType', 'PlanCost', 'Plan']
+__all__ = ['PlanCostType', 'PlanCost', 'Plan', 'CalcMarginsFromListPrice',
+          'CalcMarginsFromListPriceStart']
 __metaclass__ = PoolMeta
 
 _ZERO = Decimal('0.0')
@@ -28,7 +32,7 @@ class PlanCost:
 
     minimum = fields.Function(fields.Float('Minimum %', digits=(16, DIGITS)),
         'on_change_with_minimum')
-    margin_percent = fields.Float('Margin %', required=True, digits=(16, 4))
+    margin_percent = fields.Float('Margin %', required=True, digits=(16, DIGITS))
     margin = fields.Function(fields.Numeric('Margin', digits=(16, DIGITS)),
         'on_change_with_margin')
 
@@ -146,3 +150,40 @@ class Plan:
         if cost_type.minimum_percent:
             vals['margin_percent'] = cost_type.minimum_percent
         return vals
+
+
+class CalcMarginsFromListPriceStart(ModelView):
+    'Calculate Margins From List Price Start'
+    __name__ = 'product.cost.plan.calc_margins_from_list_price.start'
+
+    list_price = fields.Numeric('Product List Price',
+            digits=(16, DIGITS))
+
+    @staticmethod
+    def default_product_list_price():
+        return _ZERO
+
+
+class CalcMarginsFromListPrice(Wizard):
+    'Calculate Margins From List Price'
+    __name__ = 'product.cost.plan.calc_margins_from_list_price'
+
+    start = StateView('product.cost.plan.calc_margins_from_list_price.start',
+        'product_cost_plan_margin.calc_margins_from_list_price_form', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Calculate', 'calc', 'tryton-ok', default=True),
+            ])
+    calc = StateTransition()
+
+    def transition_calc(self):
+        pool = Pool()
+        Plan = pool.get('product.cost.plan')
+        plan = Plan(Transaction().context.get('active_id'))
+        margin = self.start.list_price - plan.cost_price
+        margin_percent = (margin / plan.cost_price).quantize(
+            Decimal(str(10 ** -DIGITS)))
+        for cost_line in plan.costs:
+            if cost_line.cost:
+                cost_line.margin_percent = margin_percent
+                cost_line.save()
+        return 'end'

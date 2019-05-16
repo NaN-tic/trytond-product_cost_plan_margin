@@ -49,5 +49,21 @@
             <field name="button" ref="plan_update_product_list_price_button"/>
             <field name="group" ref="product.group_product_admin"/>
         </record>
+        <!-- product.cost.plan.calc_margins_from_list_price -->
+        <record model="ir.action.wizard" id="act_calc_margins_from_list_price">
+            <field name="name">Calculate Margins From List Price</field>
+            <field name="wiz_name">product.cost.plan.calc_margins_from_list_price</field>
+            <field name="model">product.cost.plan</field>
+        </record>
+        <record model="ir.action.keyword" id="act_calc_margins_from_list_price_keyword">
+            <field name="keyword">form_action</field>
+            <field name="model">product.cost.plan,-1</field>
+            <field name="action" ref="act_calc_margins_from_list_price"/>
+        </record>
+        <record model="ir.ui.view" id="calc_margins_from_list_price_form">
+            <field name="model">product.cost.plan.calc_margins_from_list_price.start</field>
+            <field name="type">form</field>
+            <field name="name">calc_margins_from_list_price_form</field>
+        </record>
     </data>
 </tryton>
