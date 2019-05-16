@@ -211,3 +211,12 @@ Create a cost plan for product (without child boms)::
     True
     >>> plan.margin == Decimal('3.5')
     True
+
+Calc margin from list_price::
+
+    >>> calc_margin_from_list_price = Wizard('product.cost.plan.calc_margins_from_list_price', [plan])
+    >>> calc_margin_from_list_price.form.list_price = plan.list_price
+    >>> calc_margin_from_list_price.execute('calc')
+    >>> plan.reload()
+    >>> plan.list_price == calc_margin_from_list_price.form.list_price
+    True

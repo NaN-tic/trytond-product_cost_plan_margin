@@ -160,7 +160,7 @@ class CalcMarginsFromListPriceStart(ModelView):
             digits=(16, DIGITS))
 
     @staticmethod
-    def default_product_list_price():
+    def default_list_price():
         return _ZERO
 
 
