@@ -6,6 +6,5 @@ this repository contains the full copyright notices and license terms. -->
         <record model="ir.message" id="minimum_margin">
             <field name="text">Invalid margin for "%(cost_plan)s". Margin "%(margin)s" must be greather than minimum "%(value)s".</field>
         </record>
-
       </data>
 </tryton>
