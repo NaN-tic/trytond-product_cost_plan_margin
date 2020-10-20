@@ -132,7 +132,7 @@ class Plan(metaclass=PoolMeta):
         assert self.product
         list_price = Uom.compute_price(self.uom, self.list_price,
             self.product.default_uom)
-        if hasattr(self.product.__class__, 'list_price'):
+        if self.product.__class__.list_price.setter:
             digits = self.product.__class__.list_price.digits[1]
             list_price = list_price.quantize(Decimal(str(10 ** -digits)))
             self.product.list_price = list_price
