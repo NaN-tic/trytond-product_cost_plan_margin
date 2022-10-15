@@ -4,13 +4,12 @@ from decimal import Decimal
 
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
-from trytond.config import config
 from trytond.i18n import gettext
 from trytond.exceptions import UserWarning
 from trytond.wizard import Wizard, StateView, StateTransition, Button
 from trytond.transaction import Transaction
+from trytond.modules.product import price_digits, round_price
 
-DIGITS = (16, config.getint('product', 'price_decimal', default=4))
 _ZERO = Decimal('0.0')
 
 
@@ -26,10 +25,10 @@ class PlanCostType(metaclass=PoolMeta):
 class PlanCost(metaclass=PoolMeta):
     __name__ = 'product.cost.plan.cost'
 
-    minimum = fields.Function(fields.Float('Minimum %', digits=DIGITS),
+    minimum = fields.Function(fields.Float('Minimum %', digits=price_digits),
         'on_change_with_minimum')
-    margin_percent = fields.Float('Margin %', required=True, digits=(16, 4))
-    margin = fields.Function(fields.Numeric('Margin', digits=DIGITS),
+    margin_percent = fields.Float('Margin %', required=True, digits=price_digits)
+    margin = fields.Function(fields.Numeric('Margin', digits=price_digits),
         'on_change_with_margin')
 
     @classmethod
@@ -64,25 +63,20 @@ class PlanCost(metaclass=PoolMeta):
     def on_change_with_margin(self, name=None):
         if not self.cost or not self.margin_percent:
             return _ZERO
-        digits = self.__class__.margin.digits[1]
-        return Decimal(self.cost * Decimal(self.margin_percent).quantize(
-                Decimal(str(10 ** - digits))))
+        return round_price(Decimal(self.cost * Decimal(self.margin_percent)))
 
 
 class Plan(metaclass=PoolMeta):
     __name__ = 'product.cost.plan'
 
     product_list_price = fields.Function(fields.Numeric('Product List Price',
-            digits=DIGITS),
-        'get_product_list_price')
-    margin = fields.Function(fields.Numeric('Margin', digits=DIGITS),
+        digits=price_digits), 'get_product_list_price')
+    margin = fields.Function(fields.Numeric('Margin', digits=price_digits),
         'get_margin')
     margin_percent = fields.Function(fields.Numeric('Margin %',
-            digits=(16, 4)),
-        'get_margin_percent')
+        digits=price_digits), 'get_margin_percent')
     list_price = fields.Function(fields.Numeric('Unit List Price',
-            digits=DIGITS),
-        'get_list_price')
+        digits=price_digits), 'get_list_price')
 
     @classmethod
     def __setup__(cls):
@@ -97,9 +91,8 @@ class Plan(metaclass=PoolMeta):
         return self.product.list_price if self.product else None
 
     def get_margin(self, name):
-        digits = self.__class__.margin.digits[1]
-        return Decimal(sum(c.on_change_with_margin() or Decimal('0.0')
-                for c in self.costs)).quantize(Decimal(str(10 ** -digits)))
+        return round_price(Decimal(sum(c.on_change_with_margin() or Decimal('0.0')
+                for c in self.costs)))
 
     def get_margin_percent(self, name):
         if self.cost_price == _ZERO or self.margin is None:
@@ -130,13 +123,9 @@ class Plan(metaclass=PoolMeta):
         list_price = Uom.compute_price(self.uom, self.list_price,
             self.product.default_uom)
         if self.product.__class__.list_price.setter:
-            digits = self.product.__class__.list_price.digits[1]
-            list_price = list_price.quantize(Decimal(str(10 ** -digits)))
-            self.product.list_price = list_price
+            self.product.list_price = round_price(list_price)
         else:
-            digits = self.product.template.__class__.list_price.digits[1]
-            list_price = list_price.quantize(Decimal(str(10 ** -digits)))
-            self.product.template.list_price = list_price
+            self.product.template.list_price = round_price(list_price)
 
     def _get_cost_line(self, cost_type):
         vals = super(Plan, self)._get_cost_line(cost_type)
@@ -149,8 +138,7 @@ class CalcMarginsFromListPriceStart(ModelView):
     'Calculate Margins From List Price Start'
     __name__ = 'product.cost.plan.calc_margins_from_list_price.start'
 
-    list_price = fields.Numeric('Product List Price',
-            digits=DIGITS)
+    list_price = fields.Numeric('Product List Price', digits=price_digits)
 
     @staticmethod
     def default_list_price():
@@ -173,8 +161,7 @@ class CalcMarginsFromListPrice(Wizard):
         Plan = pool.get('product.cost.plan')
         plan = Plan(Transaction().context.get('active_id'))
         margin = self.start.list_price - plan.cost_price
-        margin_percent = (margin / plan.cost_price).quantize(
-            Decimal(str(10 ** -DIGITS[1])))
+        margin_percent = round_price(margin / plan.cost_price)
         for cost_line in plan.costs:
             if cost_line.cost:
                 cost_line.margin_percent = margin_percent
