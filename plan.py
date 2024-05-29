@@ -10,7 +10,7 @@ from trytond.wizard import Wizard, StateView, StateTransition, Button
 from trytond.transaction import Transaction
 from trytond.modules.product import price_digits, round_price
 
-_ZERO = Decimal('0.0')
+_ZERO = Decimal(0)
 
 
 class PlanCostType(metaclass=PoolMeta):
@@ -91,7 +91,7 @@ class Plan(metaclass=PoolMeta):
         return self.product.list_price if self.product else None
 
     def get_margin(self, name):
-        return round_price(Decimal(sum(c.on_change_with_margin() or Decimal('0.0')
+        return round_price(Decimal(sum(c.on_change_with_margin() or Decimal(0)
                 for c in self.costs)))
 
     def get_margin_percent(self, name):
@@ -100,7 +100,7 @@ class Plan(metaclass=PoolMeta):
         return (self.margin / self.cost_price).quantize(Decimal('0.0001'))
 
     def get_list_price(self, name):
-        list_price = self.cost_price if self.cost_price else Decimal('0.0')
+        list_price = self.cost_price if self.cost_price else Decimal(0)
         if self.margin:
             list_price += self.margin
         return list_price
