@@ -157,13 +157,12 @@ class CalcMarginsFromListPrice(Wizard):
     calc = StateTransition()
 
     def transition_calc(self):
-        pool = Pool()
-        Plan = pool.get('product.cost.plan')
-        plan = Plan(Transaction().context.get('active_id'))
-        margin = self.start.list_price - plan.cost_price
-        margin_percent = round_price(margin / plan.cost_price)
-        for cost_line in plan.costs:
-            if cost_line.cost:
-                cost_line.margin_percent = margin_percent
-                cost_line.save()
+        plan = self.record
+        if plan.cost_price:
+            margin = self.start.list_price - plan.cost_price
+            margin_percent = round_price(margin / plan.cost_price)
+            for cost_line in plan.costs:
+                if cost_line.cost:
+                    cost_line.margin_percent = margin_percent
+                    cost_line.save()
         return 'end'
