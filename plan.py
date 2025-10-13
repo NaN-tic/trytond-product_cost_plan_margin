@@ -88,7 +88,7 @@ class Plan(metaclass=PoolMeta):
                 })
 
     def get_product_list_price(self, name):
-        return self.product.list_price if self.product else None
+        return self.product.list_price_used if self.product else None
 
     def get_margin(self, name):
         return round_price(Decimal(sum(c.on_change_with_margin() or Decimal(0)
