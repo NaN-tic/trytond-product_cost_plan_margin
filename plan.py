@@ -122,7 +122,7 @@ class Plan(metaclass=PoolMeta):
         assert self.product
         list_price = Uom.compute_price(self.uom, self.list_price,
             self.product.default_uom)
-        if self.product.__class__.list_price.setter:
+        if self.product.list_price is not None:
             self.product.list_price = round_price(list_price)
         else:
             self.product.template.list_price = round_price(list_price)
