@@ -1,0 +1,88 @@
+#
+msgid ""
+msgstr ""
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "field:product.cost.plan,list_price:"
+msgid "Unit List Price"
+msgstr "单位标价"
+
+msgctxt "field:product.cost.plan,margin:"
+msgid "Margin"
+msgstr "利润率"
+
+msgctxt "field:product.cost.plan,margin_percent:"
+msgid "Margin %"
+msgstr "利润率 %"
+
+msgctxt "field:product.cost.plan,product_list_price:"
+msgid "Product List Price"
+msgstr "产品标价"
+
+msgctxt "field:product.cost.plan.calc_margins_from_list_price.start,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt ""
+"field:product.cost.plan.calc_margins_from_list_price.start,list_price:"
+msgid "Product List Price"
+msgstr "产品标价"
+
+msgctxt "field:product.cost.plan.cost,margin:"
+msgid "Margin"
+msgstr "利润率"
+
+msgctxt "field:product.cost.plan.cost,margin_percent:"
+msgid "Margin %"
+msgstr "利润率 %"
+
+msgctxt "field:product.cost.plan.cost,minimum:"
+msgid "Minimum %"
+msgstr "最低 %"
+
+msgctxt "field:product.cost.plan.cost.type,minimum_percent:"
+msgid "Minimum %"
+msgstr "最低 %"
+
+msgctxt "model:ir.action,name:act_calc_margins_from_list_price"
+msgid "Calculate Margins From List Price"
+msgstr "根据标价计算利润率"
+
+msgctxt "model:product.cost.plan.calc_margins_from_list_price.start,name:"
+msgid "Calculate Margins From List Price Start"
+msgstr "根据标价计算利润率：开始"
+
+msgctxt "view:product.cost.plan.calc_margins_from_list_price.start:"
+msgid "Calculate Margin from List Price"
+msgstr "根据标价计算利润率"
+
+msgctxt "view:product.cost.plan.cost.type:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:product.cost.plan.cost:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:product.cost.plan:"
+msgid ""
+"It will modify the product's field loosing the current value. Are you sure?"
+msgstr "此操作将修改产品字段并覆盖当前值。确定要继续吗？"
+
+msgctxt "view:product.cost.plan:"
+msgid "Update Product's List Price"
+msgstr "更新产品标价"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,calc:"
+msgid "Calculate"
+msgstr "计算"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,end:"
+msgid "Cancel"
+msgstr "取消"
