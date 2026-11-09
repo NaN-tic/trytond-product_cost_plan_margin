@@ -1,0 +1,90 @@
+#
+msgid ""
+msgstr ""
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "field:product.cost.plan,list_price:"
+msgid "Unit List Price"
+msgstr "Egységnyi listaár"
+
+msgctxt "field:product.cost.plan,margin:"
+msgid "Margin"
+msgstr "Árrés"
+
+msgctxt "field:product.cost.plan,margin_percent:"
+msgid "Margin %"
+msgstr "Árrés %"
+
+msgctxt "field:product.cost.plan,product_list_price:"
+msgid "Product List Price"
+msgstr "Termék listaára"
+
+msgctxt "field:product.cost.plan.calc_margins_from_list_price.start,id:"
+msgid "ID"
+msgstr "Azonosító"
+
+msgctxt ""
+"field:product.cost.plan.calc_margins_from_list_price.start,list_price:"
+msgid "Product List Price"
+msgstr "Termék listaára"
+
+msgctxt "field:product.cost.plan.cost,margin:"
+msgid "Margin"
+msgstr "Árrés"
+
+msgctxt "field:product.cost.plan.cost,margin_percent:"
+msgid "Margin %"
+msgstr "Árrés %"
+
+msgctxt "field:product.cost.plan.cost,minimum:"
+msgid "Minimum %"
+msgstr "Minimum %"
+
+msgctxt "field:product.cost.plan.cost.type,minimum_percent:"
+msgid "Minimum %"
+msgstr "Minimum %"
+
+msgctxt "model:ir.action,name:act_calc_margins_from_list_price"
+msgid "Calculate Margins From List Price"
+msgstr "Árrések számítása listaárból"
+
+msgctxt "model:product.cost.plan.calc_margins_from_list_price.start,name:"
+msgid "Calculate Margins From List Price Start"
+msgstr "Árrések számítása listaárból – Kezdés"
+
+msgctxt "view:product.cost.plan.calc_margins_from_list_price.start:"
+msgid "Calculate Margin from List Price"
+msgstr "Árrés számítása listaárból"
+
+msgctxt "view:product.cost.plan.cost.type:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:product.cost.plan.cost:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:product.cost.plan:"
+msgid ""
+"It will modify the product's field loosing the current value. Are you sure?"
+msgstr ""
+"Ez módosítja a termék mezőjét, felülírva az aktuális értéket. Biztosan "
+"folytatja?"
+
+msgctxt "view:product.cost.plan:"
+msgid "Update Product's List Price"
+msgstr "Termék listaárának frissítése"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,calc:"
+msgid "Calculate"
+msgstr "Számítás"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,end:"
+msgid "Cancel"
+msgstr "Mégse"
