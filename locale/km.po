@@ -1,0 +1,90 @@
+#
+msgid ""
+msgstr ""
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "field:product.cost.plan,list_price:"
+msgid "Unit List Price"
+msgstr "តម្លៃលក់ស្តង់ដារក្នុងមួយឯកតា"
+
+msgctxt "field:product.cost.plan,margin:"
+msgid "Margin"
+msgstr "រឹមប្រាក់ចំណេញ"
+
+msgctxt "field:product.cost.plan,margin_percent:"
+msgid "Margin %"
+msgstr "រឹមប្រាក់ចំណេញ %"
+
+msgctxt "field:product.cost.plan,product_list_price:"
+msgid "Product List Price"
+msgstr "តម្លៃលក់តាមបញ្ជីរបស់ផលិតផល"
+
+msgctxt "field:product.cost.plan.calc_margins_from_list_price.start,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt ""
+"field:product.cost.plan.calc_margins_from_list_price.start,list_price:"
+msgid "Product List Price"
+msgstr "តម្លៃលក់តាមបញ្ជីរបស់ផលិតផល"
+
+msgctxt "field:product.cost.plan.cost,margin:"
+msgid "Margin"
+msgstr "រឹមប្រាក់ចំណេញ"
+
+msgctxt "field:product.cost.plan.cost,margin_percent:"
+msgid "Margin %"
+msgstr "រឹមប្រាក់ចំណេញ %"
+
+msgctxt "field:product.cost.plan.cost,minimum:"
+msgid "Minimum %"
+msgstr "អប្បបរមា %"
+
+msgctxt "field:product.cost.plan.cost.type,minimum_percent:"
+msgid "Minimum %"
+msgstr "អប្បបរមា %"
+
+msgctxt "model:ir.action,name:act_calc_margins_from_list_price"
+msgid "Calculate Margins From List Price"
+msgstr "គណនារឹមប្រាក់ចំណេញពីតម្លៃក្នុងបញ្ជី"
+
+msgctxt "model:product.cost.plan.calc_margins_from_list_price.start,name:"
+msgid "Calculate Margins From List Price Start"
+msgstr "ចាប់ផ្ដើមគណនារឹមប្រាក់ចំណេញពីតម្លៃក្នុងបញ្ជី"
+
+msgctxt "view:product.cost.plan.calc_margins_from_list_price.start:"
+msgid "Calculate Margin from List Price"
+msgstr "គណនារឹមប្រាក់ចំណេញពីតម្លៃក្នុងបញ្ជី"
+
+msgctxt "view:product.cost.plan.cost.type:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:product.cost.plan.cost:"
+msgid "%"
+msgstr "%"
+
+msgctxt "view:product.cost.plan:"
+msgid ""
+"It will modify the product's field loosing the current value. Are you sure?"
+msgstr ""
+"សកម្មភាពនេះនឹងកែប្រែវាលរបស់ផលិតផល ហើយតម្លៃបច្ចុប្បន្ននឹងបាត់។ "
+"តើអ្នកពិតជាចង់បន្តឬទេ?"
+
+msgctxt "view:product.cost.plan:"
+msgid "Update Product's List Price"
+msgstr "ធ្វើបច្ចុប្បន្នភាពតម្លៃក្នុងបញ្ជីរបស់ផលិតផល"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,calc:"
+msgid "Calculate"
+msgstr "គណនា"
+
+msgctxt ""
+"wizard_button:product.cost.plan.calc_margins_from_list_price,start,end:"
+msgid "Cancel"
+msgstr "បោះបង់"
